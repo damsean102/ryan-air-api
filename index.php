@@ -47,6 +47,10 @@
     </div>
 </script>
 
+
+Ryanair flies in the UK from:
+Aberdeen, Belfast International, Birmingham, Bournemouth, Bristol, Cardiff, Derry, East Midlands, Edinburgh, Glasgow, Leeds Bradford, Liverpool, London Gatwick, London Luton, London Stansted, Manchester, Newcastle and Newquay Cornwall.
+
 <script src="assets/js/main.js"></script>
 
 </body>

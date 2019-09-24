@@ -20,7 +20,7 @@ axios.get(baseUrl, {
         language: 'en',
         offset: 0,
         departureAirportIataCode: 'BHX',
-        limit: 16,
+        limit: 36,
         market: 'en-gb',
         outboundDepartureDateFrom: today,
         outboundDepartureDateTo: endDate,
