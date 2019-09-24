@@ -4,7 +4,6 @@
     "devDependencies": {
         "cross-env": "^6.0.0",
         "laravel-mix": "^5.0.0",
-        "mustache": "^3.1.0",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.22.12",
         "sass-loader": "^8.0.0",
@@ -12,6 +11,7 @@
     },
     "dependencies": {
         "axios": "^0.19.0",
+        "handlebars": "^4.3.0",
         "moment": "^2.24.0",
         "tailwindcss": "^1.1.2"
     },

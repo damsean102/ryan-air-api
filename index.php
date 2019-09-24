@@ -16,14 +16,25 @@
 <div id="target">Loading...</div>
 
 
-<script id="template" type="x-tmpl-mustache">
+<script id="template" type="text/x-handlebars-template">
     <div class="wrapper">
         {{#fares}}
             <div class="block rounded overflow-hidden shadow-lg">
                 <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">{{outbound.arrivalAirport.name}} - {{outbound.arrivalAirport.countryName}}</div>
-                    <p class="text-gray-700 text-base">{{outbound.price.currencySymbol}}{{outbound.price.value}}</p>
-                    <p class="text-gray-700 text-base"><strong>Depart:</strong> {{outbound.departureDate}} - <strong>Arrive:</strong> {{outbound.arrivalDate}}
+                    <p class="text-gray-700 text-base">Flight No. {{outbound.flightNumber}}</p>
+                    <p class="font-bold text-xl mb-2">From: {{outbound.departureAirport.name}}, {{outbound.departureAirport.countryName}} ({{outbound.departureAirport.iataCode}}) - To:
+                    {{outbound.arrivalAirport.name}} - {{outbound.arrivalAirport.countryName}} ({{outbound.arrivalAirport.iataCode}})</p>
+                    <p class="text-gray-700 text-base">
+                    {{outbound.price.currencySymbol}}{{outbound.price.value}}
+                    {{#if outbound.previousPrice}}
+                        <span class="text-sm">(Previously - {{outbound.previousPrice.currencySymbol}}{{outbound.previousPrice.value}})</span>
+                    {{/if}}
+                    <br/>
+                    {{#if outbound.priceUpdated}}
+                        <span class="text-xs">Last updated at: {{formatDate outbound.priceUpdated}}</span>
+                    {{/if}}
+                    </p>
+                    <p class="text-gray-700 text-base"><strong>Depart:</strong> {{formatDate outbound.departureDate}} - <strong>Arrive:</strong> {{formatDate outbound.arrivalDate}}
                     </p>
                 </div>
                 <div class="px-6 py-4">
