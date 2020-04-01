@@ -15,30 +15,34 @@ handlebars.registerHelper('formatDate', function(dateString) {
     );
 });
 
-axios.get(baseUrl, {
-    params: {
-        language: 'en',
-        offset: 0,
-        departureAirportIataCode: 'BHX',
-        limit: 36,
-        market: 'en-gb',
-        outboundDepartureDateFrom: today,
-        outboundDepartureDateTo: endDate,
-        priceValueTo: '150',
-    }
-})
-.then(function (response) {
-    console.log(response.data.fares);
-    let data = response.data;
-    let target = document.getElementById('target');
-    let source = document.getElementById('template').innerHTML;
-    let template = handlebars.compile(source);
+const select = document.getElementById('airportIATACode');
 
-    target.innerHTML = template(data);
-})
-.catch(function (error) {
-    console.log(error);
-})
-.finally(function () {
-    // always executed
+select.addEventListener('change', function() {
+    axios.get(baseUrl, {
+        params: {
+            language: 'en',
+            offset: 0,
+            departureAirportIataCode: this.value,
+            limit: 36,
+            market: 'en-gb',
+            outboundDepartureDateFrom: today,
+            outboundDepartureDateTo: endDate,
+            priceValueTo: '150',
+        }
+    })
+    .then(function (response) {
+        console.log(response.data.fares);
+        let data = response.data;
+        let target = document.getElementById('target');
+        let source = document.getElementById('template').innerHTML;
+        let template = handlebars.compile(source);
+
+        target.innerHTML = template(data);
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+    .finally(function () {
+        // always executed
+    });
 });
