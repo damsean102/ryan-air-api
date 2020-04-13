@@ -11,10 +11,10 @@
 </head>
 <body>
 
-<div class="wrapper">
+<div id="root" class="wrapper">
     <h1 class="text-4xl">Ryan Air API</h1>
 
-    <select id="airportIATACode" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 leading-tight focus:outline-none">
+    <select id="airportIATACode" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 leading-tight focus:outline-none" @change="getFares($event)">
         <option value="">Select departure airport</option>
         <option value="ABZ">Aberdeen
         <option value="BFS">Belfast International</option>
@@ -40,39 +40,68 @@
     </select>
 </div>
 
-<div id="target"></div>
 
+<section class="wrapper">
 
-<script id="template" type="text/x-handlebars-template">
-    <div class="wrapper">
-        {{#fares}}
-            <div class="block rounded overflow-hidden shadow-lg">
-                <div class="px-6 py-4">
-                    <p class="text-gray-700 text-base">Flight No. {{outbound.flightNumber}}</p>
-                    <p class="font-bold text-xl mb-2">From: {{outbound.departureAirport.name}}, {{outbound.departureAirport.countryName}} ({{outbound.departureAirport.iataCode}})<br> To:
-                    {{outbound.arrivalAirport.name}}, {{outbound.arrivalAirport.countryName}} ({{outbound.arrivalAirport.iataCode}})</p>
-                    <p class="text-gray-700 text-base">
-                    {{outbound.price.currencySymbol}}{{outbound.price.value}}
-                    {{#if outbound.previousPrice}}
-                        <span class="text-sm">(Previously - {{outbound.previousPrice.currencySymbol}}{{outbound.previousPrice.value}})</span>
-                    {{/if}}
-                    <br/>
-                    {{#if outbound.priceUpdated}}
-                        <span class="text-xs">Last updated at: {{formatDate outbound.priceUpdated}}</span>
-                    {{/if}}
-                    </p>
-                    <p class="text-gray-700 text-base"><strong>Depart:</strong> {{formatDate outbound.departureDate}} - <strong>Arrive:</strong> {{formatDate outbound.arrivalDate}}
-                    </p>
-                </div>
-                <div class="px-6 py-4">
-                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{outbound.departureAirport.iataCode}}</span>
-                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">&rarr;</span>
-                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{outbound.arrivalAirport.iataCode}}</span>
-                </div>
-            </div>
-        {{/fares}}
+    <div v-if="loading">Loading...</div>
+
+    <div class="block rounded overflow-hidden shadow-lg" v-for="fare in fares">
+        <div class="px-6 py-4">
+            <p class="text-gray-700 text-base">Flight No. {{ fare.outbound.flightNumber }}</p>
+            <p class="font-bold text-xl mb-2">From: {{fare.outbound.departureAirport.name}}, {{fare.outbound.departureAirport.countryName}} ({{fare.outbound.departureAirport.iataCode}})<br> To:
+            {{fare.outbound.arrivalAirport.name}}, {{fare.outbound.arrivalAirport.countryName}} ({{fare.outbound.arrivalAirport.iataCode}})</p>
+            <p class="text-gray-700 text-base">
+            {{fare.outbound.price.currencySymbol}}{{fare.outbound.price.value}}
+            <!-- {{#if outbound.previousPrice}} -->
+                <span class="text-sm">(Previously - {{fare.outbound.previousPrice.currencySymbol}}{{fare.outbound.previousPrice.value}})</span>
+            <!-- {{/if}} -->
+            <br/>
+            <!-- {{#if outbound.priceUpdated}} -->
+                <span class="text-xs">Last updated at: {{fare.formatDate outbound.priceUpdated}}</span>
+            <!-- {{/if}} -->
+            </p>
+            <p class="text-gray-700 text-base"><strong>Depart:</strong> {{fare.formatDate outbound.departureDate}} - <strong>Arrive:</strong> {{fare.formatDate outbound.arrivalDate}}</p>
+        </div>
+        <div class="px-6 py-4">
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{fare.outbound.departureAirport.iataCode}}</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">&rarr;</span>
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{fare.outbound.arrivalAirport.iataCode}}</span>
+        </div>
     </div>
-</script>
+</section>
+
+
+
+
+<div id="app">
+  <h1>Bitcoin Price Index</h1>
+
+  <section v-if="errored">
+    <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+  </section>
+
+  <section v-else>
+    <div v-if="loading">Loading...</div>
+
+    <div
+      v-else
+      v-for="currency in info"
+      class="currency"
+    >
+      {{ currency.description }}:
+      <span class="lighten">
+        <span v-html="currency.symbol"></span>{{ currency.rate_float | currencydecimal }}
+      </span>
+    </div>
+
+  </section>
+</div>
+
+<!-- Production mode -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
+<!-- Dev mode -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 <script src="assets/js/main.js"></script>
 
