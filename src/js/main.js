@@ -1,3 +1,4 @@
+const Vue = require('vue');
 const axios = require('axios');
 const moment = require('moment');
 
@@ -9,11 +10,14 @@ const today = moment().format(dateFormat);
 const endDate = moment().add(3, 'months').format(dateFormat);
 
 
+console.warn('Yes Balteg, its using Vue');
+
+
 var app = new Vue({
     el: '#root',
     data: {
         fares: null,
-        loading: false,
+        loading: false
     },
     methods: {
         getFares(event) {
@@ -34,40 +38,15 @@ var app = new Vue({
                 }
             })
             .then(response => (
-                this.fares = response.data.fares,
-                console.log(response.data.fares)
+                this.fares = response.data.fares
             ))
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
             .finally(() => this.loading = false)
+        }
+    },
+    filters: {
+        formatDate(value) {
+            return moment(value).format('DD MMM YYYY - HH:mm')
         }
     }
 });
-
-
-new Vue({
-    el: '#app',
-    data () {
-      return {
-        info: null,
-        loading: true,
-        errored: false
-      }
-    },
-    filters: {
-      currencydecimal (value) {
-        return value.toFixed(2)
-      }
-    },
-    mounted () {
-      axios
-        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then(response => {
-          this.info = response.data.bpi
-        })
-        .catch(error => {
-          console.log(error)
-          this.errored = true
-        })
-        .finally(() => this.loading = false)
-    }
-  })
