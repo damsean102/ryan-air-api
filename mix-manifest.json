@@ -1,4 +1,16 @@
 {
     "/assets/js/main.js": "/assets/js/main.js",
-    "/assets/css/main.css": "/assets/css/main.css"
+    "/assets/css/main.css": "/assets/css/main.css",
+    "/assets/img/audio.svg": "/assets/img/audio.svg",
+    "/assets/img/ball-triangle.svg": "/assets/img/ball-triangle.svg",
+    "/assets/img/bars.svg": "/assets/img/bars.svg",
+    "/assets/img/circles.svg": "/assets/img/circles.svg",
+    "/assets/img/grid.svg": "/assets/img/grid.svg",
+    "/assets/img/hearts.svg": "/assets/img/hearts.svg",
+    "/assets/img/oval.svg": "/assets/img/oval.svg",
+    "/assets/img/puff.svg": "/assets/img/puff.svg",
+    "/assets/img/rings.svg": "/assets/img/rings.svg",
+    "/assets/img/spinning-circles.svg": "/assets/img/spinning-circles.svg",
+    "/assets/img/tail-spin.svg": "/assets/img/tail-spin.svg",
+    "/assets/img/three-dots.svg": "/assets/img/three-dots.svg"
 }

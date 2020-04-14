@@ -10,7 +10,7 @@ const today = moment().format(dateFormat);
 const endDate = moment().add(3, 'months').format(dateFormat);
 
 
-console.warn('Yes Balteg, its using Vue');
+console.warn('Yes Balteg, its using Vue https://ronniewaffle.xyz/src/js/main.js');
 
 
 var app = new Vue({
