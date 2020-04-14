@@ -14,11 +14,14 @@ const tailwindcss = require('tailwindcss')
  |
  */
 
-mix.js('src/js/main.js', 'assets/js/').sass('src/sass/main.scss', 'assets/css/')
-    .options({
-        processCssUrls: false,
-        postCss: [tailwindcss()],
-    });
+mix
+.copy('src/img/*', 'assets/img/')
+.js('src/js/main.js', 'assets/js/')
+.sass('src/sass/main.scss', 'assets/css/')
+.options({
+    processCssUrls: false,
+    postCss: [tailwindcss()],
+});
 
 // Full API
 // mix.js(src, output);

@@ -11,68 +11,62 @@
 </head>
 <body>
 
-<div class="wrapper">
-    <h1 class="text-4xl">Ryan Air API</h1>
+<div id="root">
+    <section class="wrapper">
+        <h1 class="text-4xl">Ryan Air API</h1>
 
-    <select id="airportIATACode" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 leading-tight focus:outline-none">
-        <option value="">Select departure airport</option>
-        <option value="ABZ">Aberdeen
-        <option value="BFS">Belfast International</option>
-        <option value="BHX">Birmingham</option>
-        <option value="BOH">Bournemouth</option>
-        <option value="BRS">Bristol</option>
-        <option value="CWL">Cardiff</option>
-        <option value="LDY">Derry</option>
-        <option value="EMA">East Midlands</option>
-        <option value="EDI">Edinburgh</option>
-        <option value="EXT">Exeter</option>
-        <option value="GLA">Glasgow</option>
-        <option value="PIK">Glasgow Prestwick</option>
-        <option value="LBA">Leeds Bradford</option>
-        <option value="LPL">Liverpool</option>
-        <option value="LGW">London Gatwick</option>
-        <option value="LTN">London Luton</option>
-        <option value="SEN">London Southend</option>
-        <option value="STN">London Stansted</option>
-        <option value="MAN">Manchester</option>
-        <option value="NCL">Newcastle</option>
-        <option value="NQY">Newquay Cornwall</option>
-    </select>
-</div>
+        <select id="airportIATACode" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 leading-tight focus:outline-none" @change="getFares($event)">
+            <option value="">Select departure airport</option>
+            <option value="ABZ">Aberdeen
+            <option value="BFS">Belfast International</option>
+            <option value="BHX">Birmingham</option>
+            <option value="BOH">Bournemouth</option>
+            <option value="BRS">Bristol</option>
+            <option value="CWL">Cardiff</option>
+            <option value="LDY">Derry</option>
+            <option value="EMA">East Midlands</option>
+            <option value="EDI">Edinburgh</option>
+            <option value="EXT">Exeter</option>
+            <option value="GLA">Glasgow</option>
+            <option value="PIK">Glasgow Prestwick</option>
+            <option value="LBA">Leeds Bradford</option>
+            <option value="LPL">Liverpool</option>
+            <option value="LGW">London Gatwick</option>
+            <option value="LTN">London Luton</option>
+            <option value="SEN">London Southend</option>
+            <option value="STN">London Stansted</option>
+            <option value="MAN">Manchester</option>
+            <option value="NCL">Newcastle</option>
+            <option value="NQY">Newquay Cornwall</option>
+        </select>
+    </section>
 
-<div id="target"></div>
+    <section class="wrapper">
 
+        <img class="loading" src="assets/img/puff.svg" v-if="loading">
 
-<script id="template" type="text/x-handlebars-template">
-    <div class="wrapper">
-        {{#fares}}
-            <div class="block rounded overflow-hidden shadow-lg">
-                <div class="px-6 py-4">
-                    <p class="text-gray-700 text-base">Flight No. {{outbound.flightNumber}}</p>
-                    <p class="font-bold text-xl mb-2">From: {{outbound.departureAirport.name}}, {{outbound.departureAirport.countryName}} ({{outbound.departureAirport.iataCode}})<br> To:
-                    {{outbound.arrivalAirport.name}}, {{outbound.arrivalAirport.countryName}} ({{outbound.arrivalAirport.iataCode}})</p>
-                    <p class="text-gray-700 text-base">
-                    {{outbound.price.currencySymbol}}{{outbound.price.value}}
-                    {{#if outbound.previousPrice}}
-                        <span class="text-sm">(Previously - {{outbound.previousPrice.currencySymbol}}{{outbound.previousPrice.value}})</span>
-                    {{/if}}
+        <div class="block rounded overflow-hidden shadow-lg" v-if="fares" v-for="fare in fares">
+            <div class="px-6 py-4">
+                <p class="text-gray-700 text-base">Flight No. {{ fare.outbound.flightNumber }}</p>
+                <p class="font-bold text-xl mb-2">From: {{fare.outbound.departureAirport.name}}, {{fare.outbound.departureAirport.countryName}} {{fare.outbound.departureAirport.iataCode}}<br> To:
+                {{fare.outbound.arrivalAirport.name}}, {{fare.outbound.arrivalAirport.countryName}} {{fare.outbound.arrivalAirport.iataCode}}</p>
+                <p class="text-gray-700 text-base">
+                    {{fare.outbound.price.currencySymbol}}{{fare.outbound.price.value}}
+                    <span class="text-sm" v-if="fare.outbound.previousPrice">(Previously - {{fare.outbound.previousPrice.currencySymbol}}{{fare.outbound.previousPrice.value}})</span>
                     <br/>
-                    {{#if outbound.priceUpdated}}
-                        <span class="text-xs">Last updated at: {{formatDate outbound.priceUpdated}}</span>
-                    {{/if}}
-                    </p>
-                    <p class="text-gray-700 text-base"><strong>Depart:</strong> {{formatDate outbound.departureDate}} - <strong>Arrive:</strong> {{formatDate outbound.arrivalDate}}
-                    </p>
-                </div>
-                <div class="px-6 py-4">
-                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{outbound.departureAirport.iataCode}}</span>
-                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">&rarr;</span>
-                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{outbound.arrivalAirport.iataCode}}</span>
-                </div>
+                    <span class="text-xs" v-if="fare.outbound.priceUpdated">Last updated at: {{fare.outbound.priceUpdated | formatDate}}</span>
+                </p>
+                <p class="text-gray-700 text-base"><strong>Depart:</strong> {{fare.outbound.departureDate | formatDate}} <br> <strong>Arrive:</strong> {{fare.outbound.arrivalDate | formatDate}}</p>
             </div>
-        {{/fares}}
-    </div>
-</script>
+            <div class="px-6 py-4">
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{fare.outbound.departureAirport.iataCode}}</span>
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">&rarr;</span>
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{fare.outbound.arrivalAirport.iataCode}}</span>
+            </div>
+        </div>
+    </section>
+
+</div>
 
 <script src="assets/js/main.js"></script>
 
