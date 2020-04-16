@@ -21,6 +21,7 @@ mix
 .options({
     processCssUrls: false,
     postCss: [tailwindcss()],
+    purifyCss: false,
 });
 
 // Full API
