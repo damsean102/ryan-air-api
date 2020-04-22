@@ -17,7 +17,93 @@ var app = new Vue({
     el: '#root',
     data: {
         fares: null,
-        loading: false
+        loading: false,
+        airports: [
+            {
+                name: 'Aberdeen',
+                iataCode: 'ABZ',
+            },
+            {
+                name: 'Belfast International',
+                iataCode: 'BFS',
+            },
+            {
+                name: 'Birmingham',
+                iataCode: 'BHX',
+            },
+            {
+                name: 'Bournemouth',
+                iataCode: 'BOH',
+            },
+            {
+                name: 'Bristol',
+                iataCode: 'BRS',
+            },
+            {
+                name: 'Cardiff',
+                iataCode: 'CWL',
+            },
+            {
+                name: 'Derry',
+                iataCode: 'LDY',
+            },
+            {
+                name: 'East Midlands',
+                iataCode: 'EMA',
+            },
+            {
+                name: 'Edinburgh',
+                iataCode: 'EDI',
+            },
+            {
+                name: 'Exeter',
+                iataCode: 'EXT',
+            },
+            {
+                name: 'Glasgow',
+                iataCode: 'GLA',
+            },
+            {
+                name: 'Glasgow Prestwick',
+                iataCode: 'PIK',
+            },
+            {
+                name: 'Leeds Bradford',
+                iataCode: 'LBA',
+            },
+            {
+                name: 'Liverpool',
+                iataCode: 'LPL',
+            },
+            {
+                name: 'London Gatwick',
+                iataCode: 'LGW',
+            },
+            {
+                name: 'London Luton',
+                iataCode: 'LTN',
+            },
+            {
+                name: 'London Southend',
+                iataCode: 'SEN',
+            },
+            {
+                name: 'London Stansted',
+                iataCode: 'STN',
+            },
+            {
+                name: 'Manchester',
+                iataCode: 'MAN',
+            },
+            {
+                name: 'Newcastle',
+                iataCode: 'NCL',
+            },
+            {
+                name: 'Newquay Cornwall',
+                iataCode: 'NQY',
+            },
+        ]
     },
     methods: {
         getFares(event) {

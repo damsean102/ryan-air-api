@@ -18,27 +18,7 @@
         <label for="airportIATACode">Departure airport</label>
         <select id="airportIATACode" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 leading-tight focus:outline-none" @change="getFares($event)">
             <option value="">Select departure airport</option>
-            <option value="ABZ">Aberdeen
-            <option value="BFS">Belfast International</option>
-            <option value="BHX">Birmingham</option>
-            <option value="BOH">Bournemouth</option>
-            <option value="BRS">Bristol</option>
-            <option value="CWL">Cardiff</option>
-            <option value="LDY">Derry</option>
-            <option value="EMA">East Midlands</option>
-            <option value="EDI">Edinburgh</option>
-            <option value="EXT">Exeter</option>
-            <option value="GLA">Glasgow</option>
-            <option value="PIK">Glasgow Prestwick</option>
-            <option value="LBA">Leeds Bradford</option>
-            <option value="LPL">Liverpool</option>
-            <option value="LGW">London Gatwick</option>
-            <option value="LTN">London Luton</option>
-            <option value="SEN">London Southend</option>
-            <option value="STN">London Stansted</option>
-            <option value="MAN">Manchester</option>
-            <option value="NCL">Newcastle</option>
-            <option value="NQY">Newquay Cornwall</option>
+            <option v-for="airport in airports" :value="airport.iataCode">{{ airport.name }}</option>
         </select>
     </section>
 
